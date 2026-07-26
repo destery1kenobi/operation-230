@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F4ECDD">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>OPERATION 230 — Field Journal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="phone">
+  <div class="screen">
+    <div class="content" id="content">
+
+      <!-- ================= TODAY ================= -->
+      <div class="tab-page on" id="page-today">
+        <div class="top">
+          <div class="brand">OPERATION <span>230</span></div>
+          <div class="pill">FIELD LOG</div>
+        </div>
+        <div class="strip">
+          <div class="strip-row">
+            <div class="day-name" id="dayName">Monday <small>TODAY</small></div>
+            <div class="streak" id="streakText">0 day streak</div>
+          </div>
+          <div class="day-tag" id="dayTag">STRENGTH A</div>
+          <div class="pbar"><i id="dayBar"></i></div>
+          <div class="pmeta"><span id="dayCount">0 of 12 logged</span><b id="dayPct">0%</b></div>
+        </div>
+        <div class="section-head">
+          <h2>TODAY'S ROUTE</h2>
+          <hr>
+          <img id="sealBadge" class="seal-badge hidden" src="assets/route-complete-patch.png" alt="Route complete">
+        </div>
+        <div id="itemList"></div>
+      </div>
+
+      <!-- ================= LOG ================= -->
+      <div class="tab-page" id="page-log">
+        <div class="top">
+          <div class="brand">DAILY <span>LOG</span></div>
+          <div class="pill">TODAY</div>
+        </div>
+        <div class="logtop">
+          <div class="mtr cal"><div class="mh"><u>Calories</u><b id="calNum">0<small>/2100</small></b></div><div class="mbar"><i id="calBar"></i></div></div>
+          <div class="mtr pro"><div class="mh"><u>Protein</u><b id="proNum">0<small>/195g</small></b></div><div class="mbar"><i id="proBar"></i></div></div>
+        </div>
+        <div class="card">
+          <h2 class="cal">Food</h2>
+          <p class="csub">Tap a plan meal to add it, or type anything below.</p>
+          <div class="chips" id="chips"></div>
+          <div class="addrow">
+            <div class="f"><label>Food</label><input id="fName" type="text" placeholder="banana" autocomplete="off"></div>
+            <div class="f"><label>Cal</label><input id="fCal" type="number" inputmode="numeric" placeholder="0"></div>
+            <div class="f"><label>Protein</label><input id="fPro" type="number" inputmode="numeric" placeholder="0"></div>
+            <button class="addbtn" id="fAdd">ADD</button>
+          </div>
+          <div class="loglist" id="foodList"></div>
+        </div>
+        <div class="card">
+          <h2 class="wat">Water</h2>
+          <p class="csub">Tap to fill. Tap the last full one to empty it.</p>
+          <div class="glasses" id="glasses"></div>
+          <div class="wctr" id="wctr">0 of 8 glasses</div>
+        </div>
+        <div class="card">
+          <h2 class="stp">Steps</h2>
+          <p class="csub">Check your phone's Health app, then type today's count.</p>
+          <div class="steprow"><input id="stepIn" type="number" inputmode="numeric" placeholder="8200"><button class="addbtn" id="stepSave">SET</button></div>
+          <div class="wctr" style="margin-top:10px">Today: <b id="stepNow">0</b> / 8,000 <span id="stepBadge"></span></div>
+        </div>
+      </div>
+
+      <!-- ================= LIFTS ================= -->
+      <div class="tab-page" id="page-lifts">
+        <div class="top"><div class="brand">THE <span>LIFTS</span></div></div>
+        <p class="csub">Three strength routes, rotated through the week. Last 2 reps should feel hard but clean — add a rep or a little weight whenever you can. 20–35 minutes is plenty.</p>
+        <div id="liftCards"></div>
+      </div>
+
+      <!-- ================= TRENDS ================= -->
+      <div class="tab-page" id="page-trends">
+        <div class="top"><div class="brand">THE <span>TREND</span></div></div>
+        <div class="statgrid">
+          <div class="sbox rank"><b id="tRank">TENDERFOOT</b><div class="rr"><u>Total points</u><s id="tTotal">0</s></div></div>
+          <div class="sbox fire"><b id="tStreak">0</b><i>Day streak</i></div>
+          <div class="sbox"><b id="tPerfect">0</b><i>Perfect days</i></div>
+        </div>
+        <div class="chartcard">
+          <div class="ch"><h2>Weight · 270 → 230</h2><button class="lw" id="logw">+ LOG</button></div>
+          <div class="cstat" id="chartStat">Log your weight to start the chart.</div>
+          <div id="chart"></div>
+        </div>
+        <div class="hist-label">History</div>
+        <div id="history"></div>
+        <button class="reset" id="reset">RESET ALL DATA</button>
+        <div style="height:18px"></div>
+      </div>
+    </div>
+
+    <nav class="nav" id="nav">
+      <button data-tab="today" class="on"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg><span>Today</span></button>
+      <button data-tab="log"><svg viewBox="0 0 24 24"><path d="M12 20V10M18 20V4M6 20v-4"/></svg><span>Log</span></button>
+      <button data-tab="lifts"><svg viewBox="0 0 24 24"><path d="M6.5 6.5l11 11"/><path d="M4 4l3 3M20 20l-3-3M2.5 8.5l3-3 3 3-3 3-3-3zM15.5 15.5l3-3 3 3-3 3-3-3z"/></svg><span>Lifts</span></button>
+      <button data-tab="trends"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M19 9l-5 5-4-4-3 3"/></svg><span>Trends</span></button>
+    </nav>
+
+    <!-- Weigh-in modal -->
+    <div class="scrim" id="weighScrim"></div>
+    <div class="modal weigh-modal" id="weighModal">
+      <div class="modal-eyebrow">WEIGH-IN</div>
+      <h3>This morning's number</h3>
+      <p class="modal-sub">After the bathroom, before food or coffee. Track the weekly trend, not the daily noise.</p>
+      <input id="weighInput" type="number" inputmode="decimal" placeholder="lb" class="weigh-input">
+      <div class="btnrow">
+        <button class="btn ghost" id="weighCancel">CANCEL</button>
+        <button class="btn go" id="weighSave">SAVE</button>
+      </div>
+    </div>
+
+    <!-- Celebration modal -->
+    <div class="scrim" id="celebScrim"></div>
+    <div class="modal celeb-modal" id="celebModal">
+      <div class="modal-eyebrow" id="celebHeading">JOURNEY COMPLETE</div>
+      <h3 id="celebDay">Monday</h3>
+      <div class="map-frame">
+        <img id="celebMap" src="assets/journey-map-complete.png" alt="Route map">
+        <img id="celebSeal" class="celeb-seal" src="assets/wax-seal-stamp.png" alt="Wax seal">
+      </div>
+      <p class="field-note" id="celebNote"></p>
+      <p class="celeb-streak" id="celebStreak">0 day streak</p>
+      <button class="btn go full" id="celebContinue">CONTINUE</button>
+    </div>
+
+    <div id="toast"></div>
+  </div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
